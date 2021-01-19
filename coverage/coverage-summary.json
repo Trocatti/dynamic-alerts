@@ -1,0 +1,5 @@
+{"total": {"lines":{"total":7,"covered":3,"skipped":0,"pct":42.86},"statements":{"total":7,"covered":3,"skipped":0,"pct":42.86},"functions":{"total":6,"covered":2,"skipped":0,"pct":33.33},"branches":{"total":0,"covered":0,"skipped":0,"pct":100}}
+,"C:\\Users\\guilh\\git\\dynamic-alerts\\src\\components\\Alert.vue": {"lines":{"total":6,"covered":2,"skipped":0,"pct":33.33},"functions":{"total":6,"covered":2,"skipped":0,"pct":33.33},"statements":{"total":6,"covered":2,"skipped":0,"pct":33.33},"branches":{"total":0,"covered":0,"skipped":0,"pct":100}}
+,"C:\\Users\\guilh\\git\\dynamic-alerts\\src\\i18n\\pt-BR.js": {"lines":{"total":0,"covered":0,"skipped":0,"pct":0},"functions":{"total":0,"covered":0,"skipped":0,"pct":0},"statements":{"total":0,"covered":0,"skipped":0,"pct":0},"branches":{"total":0,"covered":0,"skipped":0,"pct":0}}
+,"C:\\Users\\guilh\\git\\dynamic-alerts\\src\\plugins\\i18n.js": {"lines":{"total":1,"covered":1,"skipped":0,"pct":100},"functions":{"total":0,"covered":0,"skipped":0,"pct":100},"statements":{"total":1,"covered":1,"skipped":0,"pct":100},"branches":{"total":0,"covered":0,"skipped":0,"pct":100}}
+}

@@ -5,6 +5,7 @@
     viewBox="0 0 28 19"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    id="InternetSuccessIcon"
   >
     <rect x="24" width="4" height="19" :fill="color" />
     <rect x="18" y="4" width="4" height="15" :fill="color" />
@@ -14,12 +15,12 @@
   </svg>
 </template>
 <script>
-export default {
-  props: {
-    color: {
-      type: String,
-      default: "white"
+  export default {
+    props: {
+      color: {
+        type: String,
+        default: 'white'
+      }
     }
   }
-};
 </script>

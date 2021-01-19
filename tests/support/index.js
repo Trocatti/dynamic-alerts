@@ -13,8 +13,14 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
+// Component Testing resets
+require('@cypress/vue/dist/support')
+
 // Import commands.js using ES2015 syntax:
-import './commands'
+// import './commands'
 
 // Alternatively you can use CommonJS syntax:
-// require('./commands')
+require('./commands')
+
+// Import any global stylesheets here
+// require('../../src/styles/index.scss') // 💅

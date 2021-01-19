@@ -5,6 +5,7 @@
     viewBox="0 0 28 20"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    id="InternetDisconnectIcon"
   >
     <rect x="24" y="1" width="4" height="19" :fill="color" />
     <rect x="18" y="5" width="4" height="15" :fill="color" />
@@ -30,12 +31,12 @@
 </template>
 
 <script>
-export default {
-  props: {
-    color: {
-      type: String,
-      default: "#333333"
+  export default {
+    props: {
+      color: {
+        type: String,
+        default: '#333333'
+      }
     }
   }
-};
 </script>
