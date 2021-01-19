@@ -2,7 +2,7 @@
   <b-modal centered hide-footer size="lg" v-model="modalShow" @close="close()">
     <template #modal-header="{ close }">
       <b-link @click="close()" class="ml-auto">
-        <CloseIcon></CloseIcon>
+        <IconClose></IconClose>
       </b-link>
     </template>
     <slot name="octa-body"></slot>
@@ -10,11 +10,11 @@
 </template>
 
 <script>
+  import IconClose from '@/components/IconClose'
+
   export default {
     name: 'modalComponent',
-    components: {
-      CloseIcon: () => import('../icon/Close')
-    },
+    components: { IconClose },
     props: {
       show: {
         type: Boolean,

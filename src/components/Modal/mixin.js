@@ -1,6 +1,8 @@
+import Modal from './index.vue'
+
 export default {
   components: {
-    Modal: () => import('./Modal')
+    Modal
   },
   props: {
     modalShow: {

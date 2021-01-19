@@ -1,13 +1,11 @@
 <template>
   <div id="app">
-    <template v-for="(notification, index) in notifications">
-      <Alert :bind="notification" :key="index" />
-    </template>
+    <Alert :notifications="notificationsState" />
   </div>
 </template>
 
 <script>
-  import Alert from './components/Alert'
+  import Alert from '@/components/Alert'
 
   export default {
     name: 'app',
@@ -16,7 +14,15 @@
     },
     data() {
       return {
-        notifications: [
+        notificationsState: [
+          {
+            color: 'warning',
+            title: 'alert.internetDisconnect.title',
+            subtitle: 'alert.internetDisconnect.subtitle',
+            icon: 'InternetDisconnectIcon',
+            dismissible: false,
+            show: true
+          },
           {
             color: 'warning',
             title: 'alert.internetDisconnect.title',
@@ -38,7 +44,7 @@
             },
             dismissible: true,
             fade: true,
-            show: 5
+            show: true
           },
           {
             color: 'danger',
@@ -47,8 +53,6 @@
             icon: {
               component: 'InternetSuccessIcon'
             },
-            dismissible: true,
-            fade: false,
             show: true,
             tooltip: {
               hover: '991074224, 99153214',
@@ -63,7 +67,6 @@
               component: 'InternetDisconnectIcon',
               color: 'white'
             },
-            dismissible: false,
             show: true,
             modal: {
               title: 'alert.internetDisconnect.resolve',

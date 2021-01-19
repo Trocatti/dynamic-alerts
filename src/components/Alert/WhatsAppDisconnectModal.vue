@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import ModalMixin from './ModalMixin'
+  import ModalMixin from '@/components/Modal/mixin'
   export default {
     name: 'whatsappDisconnectModal',
     mixins: [ModalMixin],
