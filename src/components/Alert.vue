@@ -24,8 +24,8 @@
           {{ $t(bind.title) }}
         </span>
 
-        <div class="octa-subtitle">
-          <span v-if="bind.subtitle">
+        <div class="octa-subtitle-container">
+          <span class="octa-subtitle" v-if="bind.subtitle">
             {{ $t(bind.subtitle) }}
           </span>
           <span
@@ -79,19 +79,7 @@
     props: {
       bind: {
         type: Object,
-        required: true,
-        default: () => ({
-          color: 'transparent',
-          title: '',
-          subtitle: '',
-          show: false,
-          dismissible: true,
-          fade: true,
-          icon: {},
-          link: {},
-          tooltip: {},
-          modal: {}
-        })
+        required: true
       }
     },
     data() {
@@ -148,7 +136,7 @@
         font-size: 0.875rem;
       }
 
-      .octa-subtitle {
+      .octa-subtitle-container {
         font-size: 0.75rem;
 
         .octa-tooltip {
