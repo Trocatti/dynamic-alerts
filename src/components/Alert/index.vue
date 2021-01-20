@@ -2,7 +2,7 @@
   <div id="alert">
     <b-alert
       class="octa-alert"
-      :class="currentAlert.color"
+      :class="currentClass"
       :show="currentAlert.show"
       :fade="currentAlert.fade"
     >
@@ -125,6 +125,7 @@
       return {
         modalShow: false,
         currentIndex: 0,
+        action: false,
         currentNotifications: [...this.notifications]
       }
     },
@@ -143,25 +144,52 @@
       },
       moreNotifications() {
         return this.notificationsLenght - this.currentIndex
+      },
+      currentClass() {
+        let classAction = ''
+        if (this.action === 'next') {
+          classAction = 'octa-animate-left'
+        } else if (this.action === 'previus') {
+          classAction = 'octa-animate-right'
+        } else {
+          classAction = 'octa-animate-none'
+        }
+        console.log(classAction)
+        return [this.currentAlert.color, classAction]
       }
     },
     methods: {
+      handleAction(action) {
+        this.action = action
+      },
       handlePrevius() {
+        this.handleAction('none')
+
         this.currentIndex =
           this.currentIndex <= 0
             ? this.currentNotifications.length - 1
             : (this.currentIndex -= 1)
+
+        window.requestAnimationFrame(() => this.handleAction('previus'))
       },
       handleNext() {
+        this.handleAction('none')
+
         this.currentIndex =
           this.currentIndex >= this.currentNotifications.length - 1
             ? 0
             : (this.currentIndex += 1)
+
+        window.requestAnimationFrame(() => this.handleAction('next'))
       },
       handleClose() {
+        this.handleAction('none')
+
         const notifications = [...this.currentNotifications]
         notifications.splice(this.currentIndex, 1)
         this.currentNotifications = notifications
+
+        window.requestAnimationFrame(() => this.handleAction('next'))
       }
     }
   }
@@ -344,6 +372,38 @@
     .octa-btn-modal,
     .octa-link {
       color: $color-dark;
+    }
+  }
+
+  .octa-animate-left {
+    position: relative;
+    animation: animateleft 0.4s;
+  }
+
+  .octa-animate-right {
+    position: relative;
+    animation: animateright 0.4s;
+  }
+
+  @keyframes animateleft {
+    from {
+      left: -300px;
+      opacity: 0;
+    }
+    to {
+      left: 0;
+      opacity: 1;
+    }
+  }
+
+  @keyframes animateright {
+    from {
+      right: -300px;
+      opacity: 0;
+    }
+    to {
+      right: 0;
+      opacity: 1;
     }
   }
 </style>
