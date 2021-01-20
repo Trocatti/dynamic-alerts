@@ -1,5 +1,5 @@
 <template>
-  <Modal :show="modalShow" @close="close">
+  <modal :show="modalShow" @close="close">
     <template #octa-body>
       <div class="octa-container">
         <span class="octa-title">Telefones desconectados</span>
@@ -23,7 +23,7 @@
         </template>
       </div>
     </template>
-  </Modal>
+  </modal>
 </template>
 
 <script>

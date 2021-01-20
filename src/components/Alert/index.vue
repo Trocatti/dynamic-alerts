@@ -10,14 +10,17 @@
         <div
           class="octa-close ml-auto"
           v-if="currentAlert.dismissible"
-          @click="close()"
+          @click="handleClose"
         >
-          <IconClose></IconClose>
+          <span class="octa-hover mr-1">Fechar</span>
+          <b-avatar class="octa-icon">
+            <icon-close></icon-close>
+          </b-avatar>
         </div>
-        <template v-else-if="notifications.length > 1">
-          <div class="octa-previus" v-if="currentIndex >= 1" @click="previus">
+        <template v-else-if="showCarousel">
+          <div class="octa-previus" v-if="showPrevius" @click="handlePrevius">
             <b-avatar class="octa-icon">
-              <IconChevronLeft></IconChevronLeft>
+              <icon-chevron-left></icon-chevron-left>
             </b-avatar>
             <span class="octa-hover ml-1">Anterior</span>
           </div>
@@ -25,11 +28,11 @@
           <div
             class="octa-next"
             :class="currentIndex == 0 ? 'ml-auto' : ''"
-            @click="next"
+            @click="handleNext"
           >
             <span class="octa-hover mr-1">Próximo</span>
             <b-avatar class="octa-icon">
-              <IconChevronRight></IconChevronRight>
+              <icon-chevron-right></icon-chevron-right>
             </b-avatar>
           </div>
         </template>
@@ -83,8 +86,8 @@
         </div>
       </div>
 
-      <div class="octa-footer" v-if="notifications.length > 1">
-        mais {{ notifications.length }} notificações
+      <div class="octa-footer" v-if="notificationsLenght">
+        mais {{ moreNotifications }} notificações
       </div>
     </b-alert>
 
@@ -121,36 +124,44 @@
     data() {
       return {
         modalShow: false,
-        currentIndex: 0
+        currentIndex: 0,
+        currentNotifications: [...this.notifications]
       }
     },
     computed: {
       currentAlert() {
-        return this.notifications[this.currentIndex]
-      }
-    },
-    watch: {
-      'currentAlert.show'(show) {
-        if (typeof show === 'number') {
-          setTimeout(() => this.next(), show * 1000)
-        }
+        return this.currentNotifications[this.currentIndex]
+      },
+      notificationsLenght() {
+        return this.currentNotifications.length
+      },
+      showCarousel() {
+        return this.notificationsLenght > 1
+      },
+      showPrevius() {
+        return this.currentIndex >= 1
+      },
+      moreNotifications() {
+        return this.notificationsLenght - this.currentIndex
       }
     },
     methods: {
-      previus() {
+      handlePrevius() {
         this.currentIndex =
           this.currentIndex <= 0
-            ? this.notifications.length - 1
+            ? this.currentNotifications.length - 1
             : (this.currentIndex -= 1)
       },
-      next() {
+      handleNext() {
         this.currentIndex =
-          this.currentIndex >= this.notifications.length - 1
+          this.currentIndex >= this.currentNotifications.length - 1
             ? 0
             : (this.currentIndex += 1)
       },
-      close() {
-        this.notifications.splice(this.currentIndex, 1)
+      handleClose() {
+        const notifications = [...this.currentNotifications]
+        notifications.splice(this.currentIndex, 1)
+        this.currentNotifications = notifications
       }
     }
   }
@@ -171,18 +182,13 @@
   $color-white: white;
 
   .octa-alert {
-    display: grid;
-    grid-template-rows: 20px 1fr 20px;
-    grid-template-areas:
-      'header'
-      'body'
-      'footer';
+    display: flex;
     flex-direction: column;
     align-items: center;
-    border: 0px;
+    justify-content: center;
+    border: 0;
     border-radius: 10px;
-    padding: 5px;
-    margin: 20px;
+    padding: 16px;
     width: 325px;
     height: 100px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -194,19 +200,26 @@
       width: 1.188rem;
       background-color: $color-dark;
       opacity: 0.3;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
     }
 
     .octa-header {
-      grid-area: header;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: absolute;
       width: 100%;
+      top: 0;
+      padding: 3px;
 
       .octa-hover {
         display: none;
       }
 
+      .octa-close:hover,
       .octa-previus:hover,
       .octa-next:hover {
         .octa-hover {
@@ -216,11 +229,10 @@
     }
 
     .octa-body {
-      grid-area: body;
       display: flex;
-      align-content: center;
+      align-items: center;
       width: 100%;
-      padding: 0 20px;
+      height: 100%;
 
       .octa-avatar {
         height: 3.5rem;
@@ -256,12 +268,13 @@
     }
 
     .octa-footer {
-      grid-area: footer;
-      width: 100%;
       display: flex;
-      margin-top: 5px;
       justify-content: flex-end;
       align-items: center;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      padding: 3px 7px;
     }
   }
 
@@ -315,7 +328,6 @@
 
     .octa-icon,
     .octa-avatar {
-      cursor: pointer;
       svg {
         fill: $color-dark;
       }
