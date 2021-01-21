@@ -27,10 +27,16 @@
 </template>
 
 <script>
+  import { BFormCheckbox } from 'bootstrap-vue'
+
   import ModalMixin from '@/components/Modal/mixin'
+
   export default {
     name: 'whatsappDisconnectModal',
     mixins: [ModalMixin],
+    components: {
+      BFormCheckbox
+    },
     props: {
       numbers: {
         type: Array

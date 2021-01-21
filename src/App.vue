@@ -21,3 +21,15 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+  #app {
+    display: flex;
+    justify-content: center;
+    width: 400px;
+    height: 100vh;
+    overflow-y: scroll;
+    padding-top: 20px;
+    background-color: whitesmoke;
+  }
+</style>

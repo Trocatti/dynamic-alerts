@@ -10,11 +10,12 @@
 </template>
 
 <script>
+  import { BModal, BLink } from 'bootstrap-vue'
   import IconClose from '@/components/IconClose'
 
   export default {
     name: 'modalComponent',
-    components: { IconClose },
+    components: { BModal, BLink, IconClose },
     props: {
       show: {
         type: Boolean,

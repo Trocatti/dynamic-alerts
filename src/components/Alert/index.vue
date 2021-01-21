@@ -17,7 +17,7 @@
             <icon-close></icon-close>
           </b-avatar>
         </div>
-        <template v-else-if="showCarousel">
+        <template v-else-if="showCarouselAndFooter">
           <div class="octa-previus" v-if="showPrevius" @click="handlePrevius">
             <b-avatar class="octa-icon">
               <icon-chevron-left></icon-chevron-left>
@@ -86,7 +86,7 @@
         </div>
       </div>
 
-      <div class="octa-footer" v-if="notificationsLenght">
+      <div class="octa-footer" v-if="showCarouselAndFooter">
         mais {{ moreNotifications }} notificações
       </div>
     </b-alert>
@@ -101,6 +101,8 @@
 </template>
 
 <script>
+  import { BAlert, BAvatar } from 'bootstrap-vue'
+
   import IconClose from '@/components/IconClose'
   import IconChevronLeft from '@/components/IconChevronLeft'
   import IconChevronRight from '@/components/IconChevronRight'
@@ -108,6 +110,8 @@
   export default {
     name: 'alertComponent',
     components: {
+      BAlert,
+      BAvatar,
       IconClose,
       IconChevronLeft,
       IconChevronRight,
@@ -137,7 +141,7 @@
       notificationsLenght() {
         return this.currentNotifications.length
       },
-      showCarousel() {
+      showCarouselAndFooter() {
         return this.notificationsLenght > 1
       },
       showPrevius() {
