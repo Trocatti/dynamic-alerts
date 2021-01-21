@@ -125,8 +125,9 @@
       return {
         modalShow: false,
         currentIndex: 0,
-        action: false,
-        currentNotifications: [...this.notifications]
+        animatedLeft: false,
+        animatedRight: false,
+        currentNotifications: []
       }
     },
     computed: {
@@ -146,51 +147,52 @@
         return this.notificationsLenght - this.currentIndex
       },
       currentClass() {
-        let classAction = ''
-        if (this.action === 'next') {
-          classAction = 'octa-animate-left'
-        } else if (this.action === 'previus') {
-          classAction = 'octa-animate-right'
-        } else {
-          classAction = 'octa-animate-none'
-        }
-        console.log(classAction)
-        return [this.currentAlert.color, classAction]
+        return [
+          this.currentAlert.color,
+          { 'octa-animate-left': this.animatedLeft },
+          { 'octa-animate-right': this.animatedRight }
+        ]
       }
     },
     methods: {
-      handleAction(action) {
-        this.action = action
+      handleAnimated() {
+        this.animatedLeft = false
+        this.animatedRight = false
+      },
+      handleAnimatedPrevius() {
+        this.handleAnimated()
+        window.requestAnimationFrame(() => (this.animatedLeft = true))
+      },
+      handleAnimatedNext() {
+        this.handleAnimated()
+        window.requestAnimationFrame(() => (this.animatedRight = true))
       },
       handlePrevius() {
-        this.handleAction('none')
-
         this.currentIndex =
           this.currentIndex <= 0
             ? this.currentNotifications.length - 1
             : (this.currentIndex -= 1)
 
-        window.requestAnimationFrame(() => this.handleAction('previus'))
+        this.handleAnimatedPrevius()
       },
       handleNext() {
-        this.handleAction('none')
-
         this.currentIndex =
           this.currentIndex >= this.currentNotifications.length - 1
             ? 0
             : (this.currentIndex += 1)
 
-        window.requestAnimationFrame(() => this.handleAction('next'))
+        this.handleAnimatedNext()
       },
       handleClose() {
-        this.handleAction('none')
-
         const notifications = [...this.currentNotifications]
         notifications.splice(this.currentIndex, 1)
         this.currentNotifications = notifications
 
-        window.requestAnimationFrame(() => this.handleAction('next'))
+        this.handleAnimatedNext()
       }
+    },
+    created() {
+      this.currentNotifications = [...this.notifications]
     }
   }
 </script>
