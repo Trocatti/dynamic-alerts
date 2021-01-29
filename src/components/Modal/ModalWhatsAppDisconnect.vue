@@ -1,18 +1,18 @@
 <template>
-  <modal :show="modalShow" @close="close">
-    <template #octa-body>
+  <modal :show="modal.show" @close="close">
+    <template>
       <div class="octa-container">
         <span class="octa-title">Telefones desconectados</span>
         <span class="octa-subtitle">
           Os seguintes números estão desconectados, selecione e leia o QR CODE
           para reconectar.
         </span>
-        <template v-for="(number, index) in numbers">
+        <template v-for="(number, index) in modal.params.numbers">
           <b-form-checkbox
+            size="lg"
             :key="index"
             :id="'checkbox-' + index"
             :name="'checkbox-' + index"
-            size="lg"
             v-model="number['status']"
           >
             <div class="octa-content">
@@ -29,17 +29,26 @@
 <script>
   import { BFormCheckbox } from 'bootstrap-vue'
 
-  import ModalMixin from '@/components/Modal/mixin'
+  import Modal from './index.vue'
 
   export default {
     name: 'whatsappDisconnectModal',
-    mixins: [ModalMixin],
+
     components: {
-      BFormCheckbox
+      BFormCheckbox,
+      Modal
     },
+
     props: {
-      numbers: {
-        type: Array
+      modal: {
+        type: Object,
+        required: true
+      }
+    },
+
+    methods: {
+      close(show) {
+        this.$emit('close', show)
       }
     }
   }

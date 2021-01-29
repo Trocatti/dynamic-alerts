@@ -1,60 +1,26 @@
 export default [
   {
-    color: 'warning',
-    title: 'alert.internetDisconnect.title',
-    subtitle: 'alert.internetDisconnect.subtitle',
-    icon: 'InternetDisconnectIcon',
-    dismissible: false,
-    show: true
-  },
-  {
-    color: 'warning',
-    title: 'alert.internetDisconnect.title',
-    subtitle: 'alert.internetDisconnect.subtitle',
-    icon: {
-      component: 'InternetDisconnectIcon'
-    },
-    show: true,
-    link: {
-      href: 'http://google.com',
-      title: 'alert.internetDisconnect.resolve'
-    }
-  },
-  {
     color: 'success',
     title: 'alert.internetSuccess.title',
     icon: {
-      component: 'InternetSuccessIcon'
+      component: 'IconInternetSuccess'
     },
     dismissible: true,
     fade: true,
     show: true
   },
   {
-    color: 'danger',
-    title: 'alert.internetDisconnect.title',
-    subtitle: 'alert.internetDisconnect.subtitle',
-    icon: {
-      component: 'InternetSuccessIcon'
-    },
     show: true,
-    tooltip: {
-      hover: '991074224, 99153214',
-      title: 'alert.internetDisconnect.tooltip'
-    }
-  },
-  {
     color: 'danger',
     title: 'alert.internetDisconnect.title',
     subtitle: 'alert.internetDisconnect.subtitle',
     icon: {
-      component: 'InternetDisconnectIcon',
+      component: 'IconInternetDisconnect',
       color: 'white'
     },
-    show: true,
     modal: {
       title: 'alert.internetDisconnect.resolve',
-      component: 'WhatsAppDisconnectModal',
+      id: 'ModalWhatsAppDisconnect',
       params: {
         numbers: [
           {
@@ -71,6 +37,92 @@ export default [
           }
         ]
       }
+    }
+  },
+  {
+    show: true,
+    color: 'success',
+    title: 'alert.internetDisconnect.title',
+    subtitle: 'alert.internetDisconnect.subtitle',
+    icon: {
+      component: 'IconInternetDisconnect',
+      color: 'white'
+    },
+    modal: {
+      title: 'alert.internetDisconnect.resolve',
+      id: 'ModalWhatsAppDisconnect3',
+      params: {
+        numbers: [
+          {
+            name: 'Facebook',
+            phone: '+55 11 99107-4224'
+          },
+          {
+            name: 'WhatsApp',
+            phone: '+55 11 99107-4224'
+          },
+          {
+            name: 'Instagram',
+            phone: '+55 11 99107-4224'
+          }
+        ]
+      }
+    }
+  },
+  {
+    color: 'warning',
+    title: 'alert.internetDisconnect.title',
+    subtitle: 'alert.internetDisconnect.subtitle',
+    icon: 'IconInternetDisconnect',
+    dismissible: false,
+    show: true
+  },
+  {
+    color: 'danger',
+    title: 'alert.internetDisconnect.title',
+    subtitle: 'alert.internetDisconnect.subtitle',
+    icon: {
+      component: 'IconInternetDisconnect'
+    },
+    show: true,
+    link: {
+      href: 'https://www.whatsapp.com/legal/privacy-policy',
+      title: 'alert.internetDisconnect.link'
+    }
+  },
+  {
+    show: true,
+    color: 'warning',
+    title: 'alert.internetDisconnect.title',
+    subtitle: 'alert.internetDisconnect.subtitle',
+    icon: {
+      component: 'IconInternetDisconnect',
+      color: 'white'
+    },
+    modal: {
+      title: 'alert.internetDisconnect.resolve',
+      id: 'ModalWhatsAppDisconnect2',
+      params: {
+        numbers: [
+          {
+            name: 'Financeiro',
+            phone: '+55 11 99107-4224'
+          }
+        ]
+      }
+    }
+  },
+  {
+    color: 'danger',
+    title: 'alert.internetDisconnect.title',
+    subtitle: 'alert.internetDisconnect.subtitle',
+    icon: {
+      component: 'IconInternetSuccess'
+    },
+    show: true,
+    tooltip: {
+      hover: '991074224, 99153214',
+      title: 'alert.internetDisconnect.tooltip'
     }
   }
 ]

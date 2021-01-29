@@ -1,16 +1,16 @@
 <template>
   <div id="alert">
     <b-alert
-      class="octa-alert"
-      :class="currentClass"
       :show="currentAlert.show"
       :fade="currentAlert.fade"
+      :class="currentClass"
+      class="octa-alert"
     >
       <div class="octa-header">
         <div
-          class="octa-close ml-auto"
           v-if="currentAlert.dismissible"
           @click="handleClose"
+          class="octa-close ml-auto"
         >
           <span class="octa-hover mr-1">Fechar</span>
           <b-avatar class="octa-icon">
@@ -18,7 +18,7 @@
           </b-avatar>
         </div>
         <template v-else-if="showCarouselAndFooter">
-          <div class="octa-previus" v-if="showPrevius" @click="handlePrevius">
+          <div v-if="showPrevius" @click="handlePrevius" class="octa-previus">
             <b-avatar class="octa-icon">
               <icon-chevron-left></icon-chevron-left>
             </b-avatar>
@@ -26,9 +26,9 @@
           </div>
 
           <div
-            class="octa-next"
             :class="currentIndex == 0 ? 'ml-auto' : ''"
             @click="handleNext"
+            class="octa-next"
           >
             <span class="octa-hover mr-1">Próximo</span>
             <b-avatar class="octa-icon">
@@ -48,7 +48,7 @@
         </b-avatar>
 
         <div class="octa-content">
-          <span class="octa-title" v-if="currentAlert.title">
+          <span v-if="currentAlert.title" class="octa-title">
             {{ $t(currentAlert.title) }}
           </span>
 
@@ -57,46 +57,44 @@
               {{ $t(currentAlert.subtitle) }}
             </span>
             <span
-              class="octa-tooltip"
               v-if="currentAlert.tooltip"
               v-b-tooltip.bottom
               :title="$t(currentAlert.tooltip.hover)"
+              class="octa-tooltip"
             >
               {{ $t(currentAlert.tooltip.title) }}
             </span>
           </div>
 
           <a
-            class="octa-link"
-            target="_blank"
-            rel="noopener noreferrer"
             v-if="currentAlert.link"
             :href="currentAlert.link.href"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="octa-link"
           >
             {{ $t(currentAlert.link.title) }}
           </a>
 
           <div
-            class="octa-btn-modal"
             v-if="currentAlert.modal"
-            @click="modalShow = true"
+            @click="handleModalShow"
+            class="octa-btn-modal"
           >
             {{ $t(currentAlert.modal.title) }}
           </div>
         </div>
       </div>
 
-      <div class="octa-footer" v-if="showCarouselAndFooter">
-        mais {{ moreNotifications }} notificações
+      <div v-if="showCarouselAndFooter" class="octa-footer">
+        mais {{ moreAlerts }} notificações
       </div>
     </b-alert>
 
-    <component
-      v-if="currentAlert.modal && modalShow"
-      :is="currentAlert.modal.component"
-      :numbers="currentAlert.modal.params.numbers"
-      :modalShow.sync="modalShow"
-    ></component>
+    <slot
+      v-if="currentAlert.modal && currentAlert.modal.show"
+      :name="currentAlert.modal.id"
+    ></slot>
   </div>
 </template>
 
@@ -109,47 +107,50 @@
 
   export default {
     name: 'alertComponent',
+
     components: {
       BAlert,
       BAvatar,
       IconClose,
       IconChevronLeft,
       IconChevronRight,
-      InternetDisconnectIcon: () => import('./InternetDisconnectIcon'),
-      InternetSuccessIcon: () => import('./InternetSuccessIcon'),
-      WhatsAppDisconnectModal: () => import('./WhatsAppDisconnectModal')
+      IconInternetDisconnect: () => import('./IconInternetDisconnect'),
+      IconInternetSuccess: () => import('./IconInternetSuccess')
     },
+
     props: {
-      notifications: {
+      alerts: {
         type: Array,
         required: true
       }
     },
+
     data() {
       return {
-        modalShow: false,
-        currentIndex: 0,
         animatedLeft: false,
         animatedRight: false,
-        currentNotifications: []
+        currentIndex: 0,
+        currentAlerts: []
       }
     },
+
     computed: {
       currentAlert() {
-        return this.currentNotifications[this.currentIndex]
+        return this.currentAlerts[this.currentIndex]
       },
-      notificationsLenght() {
-        return this.currentNotifications.length
-      },
+
       showCarouselAndFooter() {
-        return this.notificationsLenght > 1
+        return this.currentAlerts.length > 1
       },
+
       showPrevius() {
         return this.currentIndex >= 1
       },
-      moreNotifications() {
-        return this.notificationsLenght - this.currentIndex
+
+      moreAlerts() {
+        return this.currentAlerts.length - this.currentIndex
       },
+
       currentClass() {
         return [
           this.currentAlert.color,
@@ -158,45 +159,60 @@
         ]
       }
     },
+
+    created() {
+      this.currentAlerts = [...this.alerts]
+    },
+
     methods: {
+      handleModalShow() {
+        const id = this.currentAlert.modal.id
+        this.currentAlert.modal = { ...this.currentAlert.modal, show: true }
+        this.$emit('handleModal', {
+          [id]: this.currentAlert.modal
+        })
+      },
+
       handleAnimated() {
         this.animatedLeft = false
         this.animatedRight = false
       },
+
       handleAnimatedPrevius() {
         this.handleAnimated()
         window.requestAnimationFrame(() => (this.animatedLeft = true))
       },
+
       handleAnimatedNext() {
         this.handleAnimated()
         window.requestAnimationFrame(() => (this.animatedRight = true))
       },
+
       handlePrevius() {
         this.currentIndex =
           this.currentIndex <= 0
-            ? this.currentNotifications.length - 1
+            ? this.currentAlerts.length - 1
             : (this.currentIndex -= 1)
 
         this.handleAnimatedPrevius()
       },
+
       handleNext() {
         this.currentIndex =
-          this.currentIndex >= this.currentNotifications.length - 1
+          this.currentIndex >= this.currentAlerts.length - 1
             ? 0
             : (this.currentIndex += 1)
 
         this.handleAnimatedNext()
       },
+
       handleClose() {
-        const notifications = [...this.currentNotifications]
-        notifications.splice(this.currentIndex, 1)
-        this.currentNotifications = notifications
+        const alerts = [...this.currentAlerts]
+        alerts.splice(this.currentIndex, 1)
+        this.currentAlerts = alerts
 
         this.handleAnimatedNext()
       }
-    },
-    created() {
-      this.currentNotifications = [...this.notifications]
     }
   }
 </script>

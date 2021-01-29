@@ -1,11 +1,17 @@
 <template>
-  <b-modal centered hide-footer size="lg" v-model="modalShow" @close="close()">
+  <b-modal
+    centered
+    hide-footer
+    size="lg"
+    v-model="modalShow"
+    @close="handleClose"
+  >
     <template #modal-header="{ close }">
-      <b-link @click="close()" class="ml-auto">
+      <b-link @click="close" class="ml-auto octa-close">
         <IconClose></IconClose>
       </b-link>
     </template>
-    <slot name="octa-body"></slot>
+    <slot></slot>
   </b-modal>
 </template>
 
@@ -15,7 +21,9 @@
 
   export default {
     name: 'modalComponent',
+
     components: { BModal, BLink, IconClose },
+
     props: {
       show: {
         type: Boolean,
@@ -23,17 +31,20 @@
         required: true
       }
     },
+
     data() {
       return {
         modalShow: false
       }
     },
+
     methods: {
-      close() {
+      handleClose() {
         this.$emit('close', false)
       }
     },
-    created() {
+
+    mounted() {
       this.modalShow = this.show
     }
   }
@@ -50,5 +61,11 @@
     .modal-body {
       padding: 0 2rem 2rem 2rem;
     }
+  }
+</style>
+
+<style lang="scss" scoped>
+  .octa-close {
+    stroke: #333333;
   }
 </style>
